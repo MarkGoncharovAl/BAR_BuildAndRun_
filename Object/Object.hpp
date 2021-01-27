@@ -1,15 +1,16 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
-#include "../Map/Map.h"
+#include "../Map/Map.hpp"
 #include <iostream>
 #include <cmath>
 #include "../Help/Help.hpp"
-#include "../Common_libs/errors.hpp"
+#include "../Common_libs/Errors/Errors.hpp"
+#include "../Help/Direction/Direction.hpp"
 
-namespace O
+namespace sfC
 {
-
-    class Object
+    class Object_t
     {
     public:
         /////////////////////////////////////////////////////
@@ -18,18 +19,19 @@ namespace O
         //     It means: sf::Image::CreateColorFromMask(mask);
         //     Use sf::Color() if nothing up to delete
         /////////////////////////////////////////////////////
-        Object(M::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &mask, float scale);
+        Object_t(sfC::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &mask, float scale);
+
         /////////////////////////////////////////////////////
         // Fast function, used for drawing
         // Application:
         // sf::RenderWindow::draw (Object::for_draw());
         /////////////////////////////////////////////////////
-        inline const sf::Sprite &for_draw() const noexcept { return sprite_; }
+        const sf::Sprite &for_draw() const { return sprite_; }
 
         /////////////////////////////////////////////////////
         // Just return position on the map (NOT VIEW)
         /////////////////////////////////////////////////////
-        inline const sf::Vector2f &get_position() const noexcept { return sprite_.getPosition(); }
+        sf::Vector2f get_position() const { return sprite_.getPosition(); }
 
         /////////////////////////////////////////////////////
         // rotate object (degree isn't rad!)
@@ -46,19 +48,19 @@ namespace O
         /////////////////////////////////////////////////////
         // Now just move object to the first location
         /////////////////////////////////////////////////////
-        void restart() noexcept;
+        void restart();
 
         /////////////////////////////////////////////////////
         // Check:
         // If object is free (used M::Map::is_solid())
         /////////////////////////////////////////////////////
-        bool is_free() const noexcept;
+        bool is_free() const;
 
-        bool is_sand() const noexcept;
-        bool is_accel() const noexcept;
-        bool is_restart() const noexcept;
+        bool is_sand() const { return map_->is_sand(sprite_.getPosition()); }
+        bool is_accel() const { return map_->is_accel(sprite_.getPosition()); }
+        bool is_restart() const { return map_->is_restart(sprite_.getPosition()); }
 
-        inline sf::FloatRect get_boundaries() const noexcept { return sprite_.getGlobalBounds(); }
+        sf::FloatRect get_boundaries() const { return sprite_.getGlobalBounds(); }
 
     protected:
         sf::Image image_;
@@ -67,45 +69,36 @@ namespace O
 
         sf::Vector2f size_;
         sf::Vector2f coord_;
-        M::Map *map_;
+        sfC::Map *map_;
     };
 
-    class Bullet : public Object
+    class Car_t : public Object_t
     {
     public:
-        //Bullet(M::Map* map, const sort_bull& cur_sort, const std::string& file, const sf::IntRect& rect, const sf::Vector2f& coord, const sf::Color& color);
-
-    private:
-        const sort_bull cur_sort_;
-    };
-
-    class Tank : public Object
-    {
-    public:
-        Tank(sf::View *view, M::Map *map, const sfC::ParamCar_t &cur_sort_tank, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale = 1.f) noexcept;
-        Tank(M::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale = 1.f) noexcept;
+        Car_t(sf::View *view, sfC::Map *map, const sfC::ParamCar_t &cur_sort_tank, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale = 1.f);
+        Car_t(sfC::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale = 1.f);
 
         /////////////////////////////////////////////////////
         // Analyse moving of tank
-        // CharRect movings - waited for actions that was translated from the Keyboard
-        //     -1 - Button (Up, Down...) was released right now
-        //      0 - Button have the same state
-        //      1 - Button was pressed right now
+        // sfC::Direction_t - waited for actions that was translated from the Keyboard
         /////////////////////////////////////////////////////
-        bool move_tank(const CharRect &movings, float time);
+        bool move_car(const sfC::Direction_t &movings, float time);
         void stop_moving() noexcept;
 
-        inline void set_view(sf::View *init_view) noexcept { view_ = init_view; }
-        inline void set_sort(const sfC::ParamCar_t &init_sort) noexcept { cur_sort_ = init_sort; }
+        void set_view(sf::View *init_view) { view_ = init_view; }
+        void set_sort(const sfC::ParamCar_t &init_sort) { cur_sort_ = init_sort; }
 
     private:
         sfC::ParamCar_t cur_sort_;
         float drifting_;
         float speed_;
-        CharRect motion_;
+        sfC::Direction_t motion_;
         sf::View *view_;
     };
 
-} // namespace O
+} // namespace sfC
 
-void RestartTank(O::Tank &tank);
+namespace sfF
+{
+    void RestartCar(sfC::Car_t &car);
+}

@@ -2,7 +2,7 @@
 
 namespace sfF
 {
-    bool IS_ASKII(const sf::Uint32 &symbol)
+    bool IS_ASKII(const sf::Uint32 &symbol) noexcept
     {
         return (symbol > 47 && symbol < 58) ||
                (symbol > 64 && symbol < 91) ||

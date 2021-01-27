@@ -1,4 +1,6 @@
-#include "Menus.h"
+#include "Menus.hpp"
+#include "../Help/Data/Data.hpp"
+#include "../Common_libs/Errors/Errors.hpp"
 
 bool AnalyseMenu(sf::RenderWindow &window)
 {
@@ -114,11 +116,12 @@ bool AnalyseMenu(sf::RenderWindow &window)
 
     return true;
 }
+
 bool MainMenu(sf::RenderWindow &window)
 {
     using cur_data = data::main_menu;
 
-    sf::View main_view(sf::FloatRect(0.f, 0.f, CON::WindowWidth, CON::WindowHeight));
+    sf::View main_view(sf::FloatRect(0.f, 0.f, sfCON::WindowWidth, sfCON::WindowHeight));
     while (window.isOpen())
     {
 
@@ -191,7 +194,7 @@ bool AnalyseMenuCars(sf::RenderWindow &window)
                 }
                 break;
             case sf::Keyboard::D:
-                if (cur_data::data.lvl_left[cur_data::data.pos_left] != CON::levels_char)
+                if (cur_data::data.lvl_left[cur_data::data.pos_left] != sfCON::levels_char)
                 {
                     cur_data::data.lvl_left[cur_data::data.pos_left]++;
                     change_data_cars(cur_data::sort2, cur_data::data.pos_left, sfC::ParamCar_t::Do::Increase);
@@ -225,7 +228,7 @@ bool AnalyseMenuCars(sf::RenderWindow &window)
                 }
                 break;
             case sf::Keyboard::Right:
-                if (cur_data::data.lvl_right[cur_data::data.pos_right] != CON::levels_char)
+                if (cur_data::data.lvl_right[cur_data::data.pos_right] != sfCON::levels_char)
                 {
                     cur_data::data.lvl_right[cur_data::data.pos_right]++;
                     change_data_cars(cur_data::sort1, cur_data::data.pos_right, sfC::ParamCar_t::Do::Increase);
@@ -344,7 +347,7 @@ std::string Wait_Text_User(sf::RenderWindow &window)
     using cur_data = data::text;
 
     std::string text;
-    sfC::Text_t user_text("Fonts/19413.ttf", 100, sf::Vector2f(CON::WindowWidth * 0.3f, CON::WindowHeight * 0.5f), "");
+    sfC::Text_t user_text("../Fonts/19413.ttf", 100, sf::Vector2f(sfCON::WindowWidth * 0.3f, sfCON::WindowHeight * 0.5f), "");
     user_text.set_color(sf::Color::Cyan);
 
     window.setView(cur_data::view);
@@ -353,9 +356,7 @@ std::string Wait_Text_User(sf::RenderWindow &window)
     {
 
         if (!AnalyseWait_Text_User(window, text, user_text))
-        {
             break;
-        }
 
         window.clear(sf::Color::White);
         window.draw(cur_data::background.for_draw());
@@ -488,7 +489,7 @@ bool AnalysePrepareCreateMap(sf::RenderWindow &window)
     }
     return true;
 }
-void PrepareCreateMap(sf::RenderWindow &window, M::Map &map)
+void PrepareCreateMap(sf::RenderWindow &window, sfC::Map &map)
 {
     using cur_data = data::text;
 
@@ -529,8 +530,8 @@ bool AnalyseCreateMap(sf::RenderWindow &window)
                 sf::Vector2f coords(event.mouseButton.x + sfF::get_view_position_x(cur_data::view),
                                     event.mouseButton.y + sfF::get_view_position_y(cur_data::view));
 
-                if ((coords.x > CON::SIZE_BLOCK && coords.x < cur_data::map.get_size_x() - CON::SIZE_BLOCK) &&
-                    (coords.y > CON::SIZE_BLOCK && coords.y < cur_data::map.get_size_y() - CON::SIZE_BLOCK))
+                if ((coords.x > sfCON::SIZE_BLOCK && coords.x < cur_data::map.GetSize().x - sfCON::SIZE_BLOCK) &&
+                    (coords.y > sfCON::SIZE_BLOCK && coords.y < cur_data::map.GetSize().y - sfCON::SIZE_BLOCK))
                 {
                     cur_data::update_block(
                         cur_data::map.AbsCoords(coords), cur_data::cur_block);
@@ -547,8 +548,8 @@ bool AnalyseCreateMap(sf::RenderWindow &window)
                 sf::Vector2f coords(event.mouseMove.x + sfF::get_view_position_x(cur_data::view),
                                     event.mouseMove.y + sfF::get_view_position_y(cur_data::view));
 
-                if ((coords.x > CON::SIZE_BLOCK && coords.x < cur_data::map.get_size_x() - CON::SIZE_BLOCK) &&
-                    (coords.y > CON::SIZE_BLOCK && coords.y < cur_data::map.get_size_y() - CON::SIZE_BLOCK))
+                if ((coords.x > sfCON::SIZE_BLOCK && coords.x < cur_data::map.GetSize().x - sfCON::SIZE_BLOCK) &&
+                    (coords.y > sfCON::SIZE_BLOCK && coords.y < cur_data::map.GetSize().y - sfCON::SIZE_BLOCK))
                 {
                     cur_data::update_block(
                         cur_data::map.AbsCoords(coords), cur_data::cur_block);
@@ -593,22 +594,22 @@ bool AnalyseCreateMap(sf::RenderWindow &window)
                 }
                 break;
             case sf::Keyboard::Num1:
-                cur_data::cur_block = M::BLOCKS::Field;
+                cur_data::cur_block = sfC::BlockPrototype::TypeBlock::Field;
                 break;
             case sf::Keyboard::Num2:
-                cur_data::cur_block = M::BLOCKS::Wall;
+                cur_data::cur_block = sfC::BlockPrototype::TypeBlock::Wall;
                 break;
             case sf::Keyboard::Num3:
-                cur_data::cur_block = M::BLOCKS::Target;
+                cur_data::cur_block = sfC::BlockPrototype::TypeBlock::Target;
                 break;
             case sf::Keyboard::Num4:
-                cur_data::cur_block = M::BLOCKS::Sand;
+                cur_data::cur_block = sfC::BlockPrototype::TypeBlock::Sand;
                 break;
             case sf::Keyboard::Num5:
-                cur_data::cur_block = M::BLOCKS::Acceleration;
+                cur_data::cur_block = sfC::BlockPrototype::TypeBlock::Acceleration;
                 break;
             case sf::Keyboard::Num6:
-                cur_data::cur_block = M::BLOCKS::Restart;
+                cur_data::cur_block = sfC::BlockPrototype::TypeBlock::Restart;
                 break;
             case sf::Keyboard::Escape:
                 ShowDoneAction(window, "Not created");
@@ -647,7 +648,6 @@ bool CreateMap(sf::RenderWindow &window)
 
     while (window.isOpen())
     {
-
         if (!AnalyseCreateMap(window))
             break;
 

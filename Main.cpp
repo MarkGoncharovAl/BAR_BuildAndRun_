@@ -1,8 +1,8 @@
-#include "Actions/Actions.h"
+#include "Actions/Actions.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "SFML works!", sf::Style::Default);
+    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "SFML works!", sf::Style::Fullscreen);
     prepare_data();
 
     while (window.isOpen())

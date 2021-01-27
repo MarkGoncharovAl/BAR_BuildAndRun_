@@ -1,4 +1,4 @@
-#include "random.hpp"
+#include "Random.hpp"
 
 std::random_device Random::rd_;
 std::mt19937 Random::gen_{Random::rd_()};

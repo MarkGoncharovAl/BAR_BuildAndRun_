@@ -3,14 +3,13 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <array>
-#include "../../Common_libs/errors.hpp"
+#include "../../Common_libs/Errors/Errors.hpp"
 
 namespace sfC
 {
 
-    class MenuCars_t final
+    struct MenuCars_t final
     {
-    public:
         MenuCars_t() = default;
 
         //////////////////////////////

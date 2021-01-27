@@ -1,6 +1,6 @@
-#include "Tank.h"
+#include "Object.hpp"
 
-O::Object::Object(M::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale)
+sfC::Object_t::Object_t(sfC::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale)
     : image_(),
 
       texture_(),
@@ -9,6 +9,7 @@ O::Object::Object(M::Map *map, const std::string &file, const sf::IntRect &rect,
       size_(static_cast<float>(rect.width), static_cast<float>(rect.height)),
       coord_(coord),
       map_(map)
+
 {
     if (!image_.loadFromFile(file))
     {
@@ -31,27 +32,27 @@ O::Object::Object(M::Map *map, const std::string &file, const sf::IntRect &rect,
     size_.y *= scale;
 }
 
-bool O::Object::rotate(float degree)
+bool sfC::Object_t::rotate(float degree)
 {
     sprite_.rotate(degree);
     return true;
 }
-bool O::Object::move(float dist)
+bool sfC::Object_t::move(float dist)
 {
     float rotation = sprite_.getRotation();
-    sprite_.move(dist * sin(rotation * CON::_DEG_TO_RAD), -1 * dist * cos(rotation * CON::_DEG_TO_RAD));
+    sprite_.move(dist * sin(rotation * sfCON::_DEG_TO_RAD), -1 * dist * cos(rotation * sfCON::_DEG_TO_RAD));
     return true;
 }
-void O::Object::restart() noexcept
+void sfC::Object_t::restart()
 {
     sprite_.setPosition(coord_);
     sprite_.setRotation(180.f);
 }
 
-bool O::Object::is_free() const noexcept
+bool sfC::Object_t::is_free() const
 {
-    float cosin = cos(sprite_.getRotation() * CON::_DEG_TO_RAD);
-    float sinus = sin(sprite_.getRotation() * CON::_DEG_TO_RAD);
+    float cosin = cos(sprite_.getRotation() * sfCON::_DEG_TO_RAD);
+    float sinus = sin(sprite_.getRotation() * sfCON::_DEG_TO_RAD);
 
     sf::Vector2f left_top(0.5f * (size_.y * sinus - size_.x * cosin) + sprite_.getPosition().x,
                           -0.5f * (size_.x * sinus + size_.y * cosin) + sprite_.getPosition().y);
@@ -102,21 +103,8 @@ bool O::Object::is_free() const noexcept
     return true;
 }
 
-bool O::Object::is_sand() const noexcept
-{
-    return map_->is_sand(sprite_.getPosition());
-}
-bool O::Object::is_accel() const noexcept
-{
-    return map_->is_accel(sprite_.getPosition());
-}
-bool O::Object::is_restart() const noexcept
-{
-    return map_->is_restart(sprite_.getPosition());
-}
-
-O::Tank::Tank(sf::View *view, M::Map *map, const sfC::ParamCar_t &cur_sort_tank, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale) noexcept
-    : Object(map, file, rect, coord, color, scale),
+sfC::Car_t::Car_t(sf::View *view, sfC::Map *map, const sfC::ParamCar_t &cur_sort_tank, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale)
+    : Object_t(map, file, rect, coord, color, scale),
       cur_sort_(cur_sort_tank),
       drifting_(0),
       speed_(0),
@@ -124,8 +112,9 @@ O::Tank::Tank(sf::View *view, M::Map *map, const sfC::ParamCar_t &cur_sort_tank,
       view_(view)
 {
 }
-O::Tank::Tank(M::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale) noexcept
-    : Object(map, file, rect, coord, color, scale),
+
+sfC::Car_t::Car_t(sfC::Map *map, const std::string &file, const sf::IntRect &rect, const sf::Vector2f &coord, const sf::Color &color, float scale)
+    : Object_t(map, file, rect, coord, color, scale),
       cur_sort_(),
       drifting_(0),
       speed_(0),
@@ -134,80 +123,37 @@ O::Tank::Tank(M::Map *map, const std::string &file, const sf::IntRect &rect, con
 {
 }
 
-bool O::Tank::move_tank(const CharRect &movings, float time)
+//DO THIS
+bool sfC::Car_t::move_car(const sfC::Direction_t &movings, float time)
 {
-    switch (movings.Up)
-    {
-    case 1:
-        motion_.Up = 1;
-        speed_ += cur_sort_.GetDeceleration();
-        break;
-    case 0:
-        if (motion_.Up == 1)
-            speed_ += cur_sort_.GetAcceleration();
-        break;
-    case -1:
-        motion_.Up = 0;
-        break;
-    }
+    using Action = sfC::Direction_t::Do;
+    motion_.CopyActDirection(movings);
 
-    switch (movings.Down)
-    {
-    case 1:
-        motion_.Down = 1;
+    //!Speed
+    ///////////////////////////////////////////////////
+    if (motion_.GetUp() == Action::Pressed)
+        speed_ += cur_sort_.GetAcceleration();
+    if (motion_.GetDown() == Action::Pressed)
         speed_ -= cur_sort_.GetBackCoef() * cur_sort_.GetAcceleration();
-        break;
-    case 0:
-        if (motion_.Down == 1)
-            speed_ -= cur_sort_.GetBackCoef() * cur_sort_.GetAcceleration();
-        break;
-    case -1:
-        motion_.Down = 0;
-        break;
-    }
 
-    if (motion_.Up == 0 && motion_.Down == 0)
+    if (motion_.GetUp() == Action::Released && motion_.GetDown() == Action::Released)
         speed_ *= cur_sort_.GetDeceleration();
 
     if (speed_ > cur_sort_.GetMaxSpeed())
         speed_ = cur_sort_.GetMaxSpeed();
+
     if (speed_ < -1 * cur_sort_.GetBackCoef() * cur_sort_.GetMaxSpeed())
         speed_ = -1 * cur_sort_.GetBackCoef() * cur_sort_.GetMaxSpeed();
+    ///////////////////////////////////////////////////
 
-    //rotation
-    switch (movings.Right)
-    {
-    case 1:
-        motion_.Right = 1;
+    //!Rotation
+    ///////////////////////////////////////////////////
+    if (motion_.GetRight() == Action::Pressed)
         drifting_ += cur_sort_.GetRotateSpeed();
-        break;
-    case 0:
-        if (motion_.Right == 1)
-        {
-            drifting_ += cur_sort_.GetRotateSpeed();
-        }
-        break;
-    case -1:
-        motion_.Right = 0;
-        break;
-    }
-
-    switch (movings.Left)
-    {
-    case 1:
-        motion_.Left = 1;
+    if (motion_.GetLeft() == Action::Pressed)
         drifting_ -= cur_sort_.GetRotateSpeed();
-        break;
-    case 0:
-        if (motion_.Left == 1)
-            drifting_ -= cur_sort_.GetRotateSpeed();
-        break;
-    case -1:
-        motion_.Left = 0;
-        break;
-    }
 
-    if (motion_.Left == 0 && motion_.Right == 0)
+    if (motion_.GetLeft() == Action::Released && motion_.GetRight() == Action::Released)
         drifting_ *= cur_sort_.GetDeceleration();
 
     if (drifting_ > cur_sort_.GetRotateSpeed())
@@ -233,29 +179,29 @@ bool O::Tank::move_tank(const CharRect &movings, float time)
 
     if (this->is_sand())
     {
-        speed_ *= CON::SPEED_SAND;
+        speed_ *= sfCON::SPEED_SAND;
     }
     else if (this->is_accel())
     {
-        speed_ *= CON::SPEED_ACCEL;
+        speed_ *= sfCON::SPEED_ACCEL;
     }
     else if (this->is_restart())
     {
-        RestartTank(*this);
+        sfF::RestartCar(*this);
     }
 
     view_->setCenter(round(sprite_.getPosition().x), round(sprite_.getPosition().y));
     return true;
 }
 
-void O::Tank::stop_moving() noexcept
+void sfC::Car_t::stop_moving() noexcept
 {
     drifting_ = 0.f;
     speed_ = 0.f;
 }
 
-void RestartTank(O::Tank &tank)
+void sfF::RestartCar(sfC::Car_t &car)
 {
-    tank.restart();
-    tank.stop_moving();
+    car.restart();
+    car.stop_moving();
 }

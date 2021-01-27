@@ -1,15 +1,12 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <string>
 #include <array>
 #include <memory>
-#include "../Map/Map.h"
-#include "../Objects/Tank.h"
-#include "../Help/span.h"
-#include "../Help/Help.hpp"
-#include "../Help/Data.h"
-#include "../Common_libs/errors.hpp"
+#include "../Help/Text/Text.hpp"
+#include "../Map/Map.hpp"
 
 /////////////////////////////////////////////////////
 // Check the user actions in the menu
@@ -41,7 +38,7 @@ bool AnalyseSetMap(sf::RenderWindow &window);
 bool SetMap(sf::RenderWindow &window);
 
 bool AnalysePrepareCreateMap(sf::RenderWindow &window);
-void PrepareCreateMap(sf::RenderWindow &window, M::Map &map);
+void PrepareCreateMap(sf::RenderWindow &window, sfC::Map &map);
 
 bool AnalyseCreateMap(sf::RenderWindow &window);
 bool CreateMap(sf::RenderWindow &window);

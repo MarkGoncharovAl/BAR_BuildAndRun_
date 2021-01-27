@@ -4,13 +4,12 @@
 #include <string>
 #include <array>
 #include <memory>
-#include "../Menus/Menus.h"
-#include "../Map/Map.h"
-#include "../Objects/Tank.h"
-#include "../Help/span.h"
+#include "../Menus/Menus.hpp"
+#include "../Map/Map.hpp"
+#include "../Object/Object.hpp"
 #include "../Help/Help.hpp"
-#include "../Help/Data.h"
-#include "../Common_libs/errors.hpp"
+#include "../Help/Data/Data.hpp"
+#include "../Common_libs/Errors/Errors.hpp"
 
 void Full_Restart();
 
@@ -39,7 +38,6 @@ bool CheckWin();
 // Reset map
 // Count_blocks - how many solid blocks your map will have
 /////////////////////////////////////////////////////
-bool RestartRace(M::Map &map, int count_blocks);
 
 void change_data_cars(sfC::ParamCar_t &sort, int proper, sfC::ParamCar_t::Do action = sfC::ParamCar_t::Do::Increase);
 

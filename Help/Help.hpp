@@ -2,14 +2,14 @@
 
 #include <iostream>
 #include <string>
-#include "span.h"
-#include "../Common_libs/errors.hpp"
+#include <SFML/Graphics.hpp>
 #include "Text/Text.hpp"
 #include "ParamCar/ParamCar.hpp"
 
 namespace sfF
 {
-    bool IS_ASKII(const sf::Uint32 &symbol);
+
+    bool IS_ASKII(const sf::Uint32 &symbol) noexcept;
 
     ///////////////////////////////////////////////
     // Rewrite digital in text
@@ -31,61 +31,8 @@ namespace sfF
 
 //-------------------------------------------------------------------
 
-struct CharRect
-{
-    CharRect(char _Up, char _Down, char _Right, char _Left) noexcept : Up(_Up),
-                                                                       Down(_Down),
-                                                                       Right(_Right),
-                                                                       Left(_Left)
-    {
-    }
-    CharRect() noexcept : Up(0),
-                          Down(0),
-                          Right(0),
-                          Left(0)
-    {
-    }
-    CharRect(const CharRect &other) noexcept : Up(other.Up),
-                                               Down(other.Down),
-                                               Right(other.Right),
-                                               Left(other.Left)
-    {
-    }
-
-    char Up;
-    char Down;
-    char Right;
-    char Left;
-};
-
-/////////////////////////////////////////////////////
-// WASN'T DONE YET
-/////////////////////////////////////////////////////
-struct sort_bull
-{
-    sort_bull() noexcept : max_speed_(0.f),
-                           damage_(0.f)
-    {
-    }
-    sort_bull(float m_sp, float dam) noexcept : max_speed_(m_sp),
-                                                damage_(dam)
-    {
-    }
-    sort_bull(const sort_bull &other) noexcept : max_speed_(other.max_speed_),
-                                                 damage_(other.damage_)
-    {
-    }
-    sort_bull(sort_bull &&other) noexcept : max_speed_(std::move(other.max_speed_)),
-                                            damage_(std::move(other.damage_))
-    {
-    }
-
-    float max_speed_;
-    float damage_;
-};
-
 //CONSTANTS
-namespace CON
+namespace sfCON
 {
     constexpr float _DEG_TO_RAD = 31415.f / 1800000.f;
 
@@ -105,8 +52,8 @@ namespace CON
     constexpr float levels = 5.f;
     constexpr char levels_char = 5;
 
-    constexpr ::sfC::ParamCar_t sort_tank_BASE{1.f / 2500.f, 1.f / 12.f, 1.f / 4.f, 1.f / 1500.f, 1.f / 12.f, 170.f, 0.999f};
-    constexpr ::sfC::ParamCar_t sort_tank_IDEAL{1.f / 400.f, 1.5f, 1.f / 1.2f, 1.f / 300.f, 1.f / 4.f, 20.f, 0.96f};
+    constexpr ::sfC::ParamCar_t sort_tank_BASE{1.f / 2500.f, 1.f / 12.f, 1.f / 4.f, 1.f / 15.f, 2.f, 170.f, 0.999f};
+    constexpr ::sfC::ParamCar_t sort_tank_IDEAL{1.f / 400.f, 1.5f, 1.f / 1.2f, 1.f / 5.f, 10.f, 20.f, 0.96f};
 
     constexpr float acceleration_tank_rank = (sort_tank_IDEAL.GetAcceleration() - sort_tank_BASE.GetAcceleration()) / levels;
     constexpr float back_speed_tank_rank = (sort_tank_IDEAL.GetBackCoef() - sort_tank_BASE.GetBackCoef()) / levels;
@@ -116,5 +63,4 @@ namespace CON
     constexpr float controll_tank_rank = (sort_tank_IDEAL.GetDriftSpeed() - sort_tank_BASE.GetDriftSpeed()) / levels;
     constexpr float decell_tank_rank = (sort_tank_IDEAL.GetDeceleration() - sort_tank_BASE.GetDeceleration()) / levels;
 
-    const sort_bull sort_bull_ORD(0.25f, 10.f);
-} // namespace CON
+} // namespace sfCON

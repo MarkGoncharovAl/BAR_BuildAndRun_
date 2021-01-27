@@ -18,19 +18,19 @@ void sfC::ParamCar_t::CorrectProperties(int property, Do action /* = Do::Increas
         switch (property)
         {
         case 0:
-            acceleration_ += CON::acceleration_tank_rank;
+            acceleration_ += sfCON::acceleration_tank_rank;
             break;
         case 1:
-            max_speed_ += CON::max_speed_tank_rank;
-            back_coef_ += CON::back_speed_tank_rank;
+            max_speed_ += sfCON::max_speed_tank_rank;
+            back_coef_ += sfCON::back_speed_tank_rank;
             break;
         case 2:
-            rotate_speed_ += CON::rotate_tank_rank;
-            max_rot_speed_ += CON::max_rotate_tank_rank;
+            rotate_speed_ += sfCON::rotate_tank_rank;
+            max_rot_speed_ += sfCON::max_rotate_tank_rank;
             break;
         case 3:
-            deceleration_ += CON::decell_tank_rank;
-            drift_speed_ += CON::controll_tank_rank;
+            deceleration_ += sfCON::decell_tank_rank;
+            drift_speed_ += sfCON::controll_tank_rank;
             break;
         default:
             WARNING("Can't find such property!");
@@ -44,19 +44,19 @@ void sfC::ParamCar_t::CorrectProperties(int property, Do action /* = Do::Increas
         switch (property)
         {
         case 0:
-            acceleration_ -= CON::acceleration_tank_rank;
+            acceleration_ -= sfCON::acceleration_tank_rank;
             break;
         case 1:
-            max_speed_ -= CON::max_speed_tank_rank;
-            back_coef_ -= CON::back_speed_tank_rank;
+            max_speed_ -= sfCON::max_speed_tank_rank;
+            back_coef_ -= sfCON::back_speed_tank_rank;
             break;
         case 2:
-            rotate_speed_ -= CON::rotate_tank_rank;
-            max_rot_speed_ -= CON::max_rotate_tank_rank;
+            rotate_speed_ -= sfCON::rotate_tank_rank;
+            max_rot_speed_ -= sfCON::max_rotate_tank_rank;
             break;
         case 3:
-            deceleration_ -= CON::decell_tank_rank;
-            drift_speed_ -= CON::controll_tank_rank;
+            deceleration_ -= sfCON::decell_tank_rank;
+            drift_speed_ -= sfCON::controll_tank_rank;
             break;
         default:
             WARNING("Can't find such property!");

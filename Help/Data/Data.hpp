@@ -1,16 +1,17 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <fstream>
 #include <array>
 #include <stack>
 #include <map>
-#include "../Common_libs/errors.hpp"
-#include "Help.hpp"
-#include "../Map/Map.h"
-#include "../Objects/Tank.h"
-#include "../Actions/Actions.h"
-#include "Picture/Picture.hpp"
+#include "../../Common_libs/Errors/Errors.hpp"
+#include "../Help.hpp"
+#include "../../Map/Map.hpp"
+#include "../../Object/Object.hpp"
+#include "../Picture/Picture.hpp"
+#include "../../Actions/Actions.hpp"
 
 void prepare_data();
 
@@ -78,16 +79,16 @@ struct data
         static sf::View view2;
         static sf::View full_view;
 
-        static M::Map map;
+        static sfC::Map map;
 
-        static O::Tank tank1;
-        static O::Tank tank2;
+        static sfC::Car_t tank1;
+        static sfC::Car_t tank2;
 
         //////////////////////
         //returns true if map was read succesfully
         //false in another case
         //////////////////////
-        static bool read_map(const std::string &file, M::Map &cur_map = data::main_game::map);
+        static bool read_map(const std::string &file, sfC::Map &cur_map = data::main_game::map);
 
         friend void Full_Restart();
         friend bool AnalyseGame(sf::RenderWindow &, float);
@@ -96,12 +97,13 @@ struct data
         friend void prepare_data_main_game();
         friend bool SetMap(sf::RenderWindow &window);
         friend bool AnalyseSetMap(sf::RenderWindow &);
-        friend void PrepareCreateMap(sf::RenderWindow &, M::Map &);
+        friend void PrepareCreateMap(sf::RenderWindow &, sfC::Map &);
+        friend void prepare_data_create_map();
     };
 
     class create_map
     {
-        static M::Map map;
+        static sfC::Map map;
         static sfC::Picture_t info_user;
 
         static sf::View view;
@@ -121,11 +123,12 @@ struct data
 
         struct data_for_stack
         {
-            data_for_stack(const sf::Vector2i init_block, M::BLOCKS init_type) noexcept : block(init_block),
-                                                                                          type(init_type)
+            data_for_stack(const sf::Vector2i init_block, sfC::BlockPrototype::TypeBlock init_type)
+                : block(init_block),
+                  type(init_type)
             {
             }
-            bool is_equal(const sf::Vector2i &other_block, M::BLOCKS other_type) const noexcept
+            bool is_equal(const sf::Vector2i &other_block, sfC::BlockPrototype::TypeBlock other_type) const
             {
                 if (block.x == other_block.x &&
                     block.y == other_block.y &&
@@ -134,14 +137,14 @@ struct data
                 return false;
             }
             sf::Vector2i block;
-            M::BLOCKS type;
+            sfC::BlockPrototype::TypeBlock type;
         };
         static std::stack<data_for_stack> actions;
 
-        static M::BLOCKS cur_block;
+        static sfC::BlockPrototype::TypeBlock cur_block;
 
         static void update_mouse(int x, int y) noexcept;
-        static void update_block(const sf::Vector2i &block, M::BLOCKS type) noexcept;
+        static void update_block(const sf::Vector2i &block, sfC::BlockPrototype::TypeBlock type) noexcept;
         static void cancel_last_update() noexcept;
         static void move_view() noexcept;
         static void clear_stack() noexcept;
@@ -158,8 +161,8 @@ struct data
         // return true if map was pushed
         // return false if stack is full
         ////////////////////
-        static bool insert_map(const std::string &name, const M::Map_Prototype &map);
-        static void write_map_into_file(const std::string &file, const M::Map_Prototype &map);
+        static bool insert_map(const std::string &name, const sfC::MapPrototype &map);
+        static void write_map_into_file(const std::string &file, const sfC::MapPrototype &map);
         static void write_name_new_map(const std::string &file);
 
     private:
@@ -184,7 +187,7 @@ struct data
         friend void prepare_data_map_prot();
         friend bool AnalyseSetMap(sf::RenderWindow &, std::string &, sfC::Text_t &);
         friend bool SetMap(sf::RenderWindow &window);
-        friend void PrepareCreateMap(sf::RenderWindow &, M::Map &);
+        friend void PrepareCreateMap(sf::RenderWindow &, sfC::Map &);
 
         static sfC::Text_t show_down_action1;
         static sfC::Text_t show_down_action2;
@@ -203,7 +206,7 @@ struct data
         friend bool SetMap(sf::RenderWindow &);
         friend void prepare_data_map_prot();
         friend bool AnalyseSetMap(sf::RenderWindow &);
-        friend void PrepareCreateMap(sf::RenderWindow &, M::Map &);
+        friend void PrepareCreateMap(sf::RenderWindow &, sfC::Map &);
         friend bool AnalysePrepareCreateMap(sf::RenderWindow &);
     };
 };

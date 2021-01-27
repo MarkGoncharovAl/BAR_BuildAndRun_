@@ -1,4 +1,5 @@
-#include "Actions.h"
+#include "Actions.hpp"
+#include "../Help/Direction/Direction.hpp"
 
 void Full_Restart()
 {
@@ -6,14 +7,14 @@ void Full_Restart()
     data::menu_cars::main_buttons[2].set_position(30.f, 620.f);
     data::menu_cars::main_buttons[3].set_position(1793.f, 620.f);
 
-    data::menu_cars::sort1 = CON::sort_tank_BASE;
-    data::menu_cars::sort2 = CON::sort_tank_BASE;
+    data::menu_cars::sort1 = sfCON::sort_tank_BASE;
+    data::menu_cars::sort2 = sfCON::sort_tank_BASE;
 
     for (auto &text : data::menu_cars::levels)
         text.set_text("0");
 
-    RestartTank(data::main_game::tank1);
-    RestartTank(data::main_game::tank2);
+    sfF::RestartCar(data::main_game::tank1);
+    sfF::RestartCar(data::main_game::tank2);
 
     data::main_game::texts[1].set_text("0");
     data::main_game::texts[3].set_text("0");
@@ -27,96 +28,26 @@ bool AnalyseGame(sf::RenderWindow &window, float time)
         return false;
 
     sf::Event event;
-    CharRect moving_tank1;
-    CharRect moving_tank2;
+    sfC::Direction_t moving_tank1;
+    sfC::Direction_t moving_tank2;
 
     while (window.pollEvent(event))
     {
         if (event.type == sf::Event::Closed)
             return false;
 
-        if (event.type == sf::Event::KeyPressed)
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         {
-            switch (event.key.code)
-            {
-                //first tank
-            case sf::Keyboard::Up:
-                moving_tank1.Up = 1;
-                break;
-            case sf::Keyboard::Down:
-                moving_tank1.Down = 1;
-                break;
-            case sf::Keyboard::Right:
-                moving_tank1.Right = 1;
-                break;
-            case sf::Keyboard::Left:
-                moving_tank1.Left = 1;
-                break;
-
-                //second tank
-            case sf::Keyboard::W:
-                moving_tank2.Up = 1;
-                break;
-            case sf::Keyboard::S:
-                moving_tank2.Down = 1;
-                break;
-            case sf::Keyboard::D:
-                moving_tank2.Right = 1;
-                break;
-            case sf::Keyboard::A:
-                moving_tank2.Left = 1;
-                break;
-
-                //common cases
-            case sf::Keyboard::Escape:
-                MenuCars(window);
-                return false;
-
-            default:
-                break;
-            }
+            MenuCars(window);
+            return false;
         }
 
-        else if (event.type == sf::Event::KeyReleased)
-        {
-            switch (event.key.code)
-            {
-                //first tank
-            case sf::Keyboard::Up:
-                moving_tank1.Up = -1;
-                break;
-            case sf::Keyboard::Down:
-                moving_tank1.Down = -1;
-                break;
-            case sf::Keyboard::Right:
-                moving_tank1.Right = -1;
-                break;
-            case sf::Keyboard::Left:
-                moving_tank1.Left = -1;
-                break;
-
-                //second tank
-            case sf::Keyboard::W:
-                moving_tank2.Up = -1;
-                break;
-            case sf::Keyboard::S:
-                moving_tank2.Down = -1;
-                break;
-            case sf::Keyboard::D:
-                moving_tank2.Right = -1;
-                break;
-            case sf::Keyboard::A:
-                moving_tank2.Left = -1;
-                break;
-
-            default:
-                break;
-            }
-        }
+        moving_tank1.CheckKeyboard(event.type, event.key.code, sfC::Direction_t::Type::Arrows);
+        moving_tank2.CheckKeyboard(event.type, event.key.code, sfC::Direction_t::Type::WASD);
     }
 
-    cur_data::tank1.move_tank(moving_tank1, time);
-    cur_data::tank2.move_tank(moving_tank2, time);
+    cur_data::tank1.move_car(moving_tank1, time);
+    cur_data::tank2.move_car(moving_tank2, time);
 
     return true;
 }
@@ -190,16 +121,6 @@ bool CheckWin()
         cur_data::tank2.restart();
     }
     return false;
-}
-
-bool RestartRace(M::Map &map, int count_blocks)
-{
-    if (!map.change_rect(M::BLOCKS::Field, sf::IntRect(1, 1, 78, 78)) ||
-        !map.create_random(M::BLOCKS::Wall, count_blocks, sf::IntRect(1, 1, 77, 77)) ||
-        !map.change_rect(M::BLOCKS::Field, sf::IntRect(1, 1, 3, 3)) ||
-        !map.change_rect(M::BLOCKS::Target, sf::IntRect(77, 77, 2, 2)))
-        ERROR("Problems with creating random map!");
-    return true;
 }
 
 // !CHANGE IT - FIND FUNCTIONS

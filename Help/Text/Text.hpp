@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "SFML/Graphics.hpp"
-#include "../../Common_libs/errors.hpp"
+#include "../../Common_libs/Errors/Errors.hpp"
 
 /////////////////////////////////////////////////////
 // Better way to use sf::Font and sf::Text together
