@@ -15,7 +15,6 @@
 
 void prepare_data();
 
-void prepare_data_main_menu();
 void prepare_data_create_map();
 void prepare_data_menu_cars();
 void prepare_data_main_game();
@@ -23,24 +22,6 @@ void prepare_data_map_prot();
 
 struct data
 {
-
-    class main_menu
-    {
-        static sf::IntRect released;
-        static sf::IntRect pressed;
-
-        static int cur_press;
-
-        static sfC::Picture_t main_pic;
-
-        static std::array<sfC::Picture_t, 5> buttons;
-
-        static sfC::Text_t texts[5];
-
-        friend bool AnalyseMenu(sf::RenderWindow &window);
-        friend bool MainMenu(sf::RenderWindow &window);
-        friend void prepare_data_main_menu();
-    };
 
     class menu_cars
     {

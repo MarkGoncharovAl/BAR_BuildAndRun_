@@ -2,148 +2,8 @@
 #include "../Help/Data/Data.hpp"
 #include "../Common_libs/Errors/Errors.hpp"
 
-bool AnalyseMenu(sf::RenderWindow &window)
-{
-    //CHANGE STATIC
-    //  data::main_menu::buttons
-    //  data::main_menu::cur_press
-    using cur_data = data::main_menu;
-
-    sf::Event event;
-    while (window.pollEvent(event))
-    {
-
-        if (event.type == sf::Event::Closed)
-            return false;
-
-        if (event.type == sf::Event::KeyPressed)
-        {
-            switch (event.key.code)
-            {
-            case sf::Keyboard::Escape:
-                return false;
-
-            case sf::Keyboard::Enter:
-                switch (cur_data::cur_press)
-                {
-                case 0:
-                    MenuCars(window);
-                    return false;
-                    break;
-                case 1:
-                    Full_Restart();
-                    ShowDoneAction(window, "Restarted");
-                    break;
-
-                case 2:
-                    SetMap(window);
-                    break;
-                case 3:
-                    CreateMap(window);
-                    break;
-                case 4:
-                    return false;
-                    break;
-                }
-                break;
-
-            case sf::Keyboard::Up:
-                if (cur_data::cur_press > 0)
-                {
-                    cur_data::buttons[cur_data::cur_press].set_texture(cur_data::released);
-                    cur_data::cur_press--;
-                    cur_data::buttons[cur_data::cur_press].set_texture(cur_data::pressed);
-                }
-                break;
-            case sf::Keyboard::Down:
-                if (cur_data::cur_press < 4)
-                {
-                    cur_data::buttons[cur_data::cur_press].set_texture(cur_data::released);
-                    cur_data::cur_press++;
-                    cur_data::buttons[cur_data::cur_press].set_texture(cur_data::pressed);
-                }
-                break;
-            default:
-                break;
-            }
-        }
-
-        if (event.type == sf::Event::MouseMoved)
-        {
-            sf::Vector2f cur_coord(static_cast<float>(event.mouseMove.x), static_cast<float>(event.mouseMove.y));
-
-            for (int i = 0; i < 5; ++i)
-            {
-                if (cur_data::buttons[i].get_glob_bounds().contains(cur_coord))
-                {
-                    cur_data::buttons[cur_data::cur_press].set_texture(cur_data::released);
-                    cur_data::cur_press = i;
-                    cur_data::buttons[cur_data::cur_press].set_texture(cur_data::pressed);
-                    break;
-                }
-            }
-        }
-
-        if (event.type == sf::Event::MouseButtonPressed)
-        {
-            if (event.mouseButton.button == sf::Mouse::Left &&
-                cur_data::buttons[cur_data::cur_press].get_glob_bounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
-            {
-
-                switch (cur_data::cur_press)
-                {
-                case 0:
-                    MenuCars(window);
-                    return false;
-                    break;
-                case 1:
-                    Full_Restart();
-                    ShowDoneAction(window, "Restarted");
-                    break;
-                case 2:
-                    SetMap(window);
-                    break;
-                case 3:
-                    CreateMap(window);
-                    break;
-                case 4:
-                    return false;
-                    break;
-                }
-            }
-        }
-    }
-
-    return true;
-}
-
-bool MainMenu(sf::RenderWindow &window)
-{
-    using cur_data = data::main_menu;
-
-    sf::View main_view(sf::FloatRect(0.f, 0.f, sfCON::WindowWidth, sfCON::WindowHeight));
-    while (window.isOpen())
-    {
-
-        if (!AnalyseMenu(window))
-        {
-            return false;
-        }
-
-        window.clear();
-        window.draw(data::main_menu::main_pic.for_draw());
-
-        for (const auto &button : cur_data::buttons)
-            window.draw(button.for_draw());
-
-        for (const auto &text : cur_data::texts)
-            window.draw(text.for_draw());
-
-        window.setView(main_view);
-        window.display();
-    }
-    return false;
-}
+//!Should be replaced
+#include "Main/MenusMain.hpp"
 
 bool AnalyseMenuCars(sf::RenderWindow &window)
 {
@@ -170,7 +30,7 @@ bool AnalyseMenuCars(sf::RenderWindow &window)
                 }
                 if (cur_data::main_buttons[1].get_glob_bounds().contains(static_cast<float>(event.mouseButton.x), static_cast<float>(event.mouseButton.y)))
                 {
-                    MainMenu(window);
+                    sfDATA::MainMenu::ChechMainMenu(window);
                     return false;
                 }
             }
@@ -251,7 +111,7 @@ bool AnalyseMenuCars(sf::RenderWindow &window)
                 MainGame(window, cur_data::sort1, cur_data::sort2);
                 return false;
             case sf::Keyboard::Escape:
-                MainMenu(window);
+                sfDATA::MainMenu::ChechMainMenu(window);
                 return false;
             default:
                 break;

@@ -23,6 +23,7 @@ add_subdirectory(Help)
 add_subdirectory(Map)
 add_subdirectory(Object)
 add_subdirectory(Menus)
+add_subdirectory(Menus/Main)
 
 message("Building!")
 add_executable(
@@ -42,8 +43,11 @@ target_link_libraries(
     Matrix 
 
     Menus
+    MenusMain
+
     Map
     MapPrototypes
+
     Text 
     Help 
     ParamCar
