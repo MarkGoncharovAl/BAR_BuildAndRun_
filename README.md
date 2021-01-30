@@ -1,19 +1,47 @@
-# TANK!!! #
+# Build_And_RUN!!! #
 ### Author: Goncharov Mark (EverRest) ###
 
-There is a new brand game! Yep, right now it can be donloaded and played by whose have VS 2017+ , SFML 2.5.1 - in that case you can clone it and check (now, there is no garantee that game will launch on your pc)
+Проект 2го курса ФРКТ МФТИ
 
-This topic will be updated after some time - check it (if you want). Release of the game will be on my VK page: https://vk.com/id138511474 (I assume it september 2020)
+### Содержание: ###
+1.  Системные требования
+2.  [Установка](https://github.com/MarkGoncharovAl/BAR_BuildAndRun_/tree/work1#%D1%81%D0%BE%D0%B4%D0%B5%D1%80%D0%B6%D0%B0%D0%BD%D0%B8%D0%B5)
+3.  Интерфейс
+4.  Концепция кода
 
-Right now this article isn't written fully. Just check programms and pictures that I have now)))
+Системные требования
+====================
+Игра написана для GCC под операционную систему Linux-Ubuntu (установка представлена именно для неё). 
 
-Pictures: folder Pictures... (you didn't wait , did you?)
-Programm:
-	
-*	Actions: main functions that manupulate the game
-*	Map: Map, Prototypes of map, using it and so on
-*	Images: Useful images (something i didn't use, but i look at them)
-*	Objects: tank, bullets and so on
-*	Fonts: pretty fonts)
+Можно запустить и на других операционных системах - узнайте, как поставить SFML (Simple and Fast Multimedia Library) на Ваш компьютер. Далее следуйте установке - исполняйте действия, описанные словами, используя возможности вашей операционки
 
-*	Help: so useful functions, structers, constants - there is array_dim2)))
+Установка
+=========
+* Скачать содержимое репозитория в удобную Вам папку на диске
+>git clone https://github.com/MarkGoncharovAl/BAR_BuildAndRun_
+* Установить SFML. Она использовалась при написании кода
+>sudo apt-get install libsfml-dev
+* Сoздать и войти в папку, в которой будет собрана игра
+>Открывем терминал в папке BAR
+
+>mkdir build
+
+>cd build
+* Собрать cmake проект 
+>cmake ../
+
+>make
+* Запустить игру - объектный файл run
+>/run
+
+Интерфейс
+=========
+Управлять можно не только мышкой, но и клавишами
+
+В меню настройки машини во время игры используются комбинации WASD и стрелки
+
+Escape работает во всех меню для перехода в прошлое окно
+
+Для сохранения карты в меню Create используйте комбинацию Ctrl+S
+
+Для выбора карты в меню Download используются горизонательные стрелки. Окончательный выбор карты Enter

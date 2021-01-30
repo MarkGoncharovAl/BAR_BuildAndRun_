@@ -1,27 +1,7 @@
 #include "Data.hpp"
 
-//data::main_menu
-////////////////////////////////////////
-sfC::Picture_t data::main_menu::main_pic("../Images/menu.png", sf::IntRect(0, 0, sfCON::WindowWidth, sfCON::WindowHeight), sf::Vector2f(0, 0));
-
-sf::IntRect data::main_menu::released(301, 377, 199, 64);
-sf::IntRect data::main_menu::pressed(570, 377, 199, 64);
-int data::main_menu::cur_press = 0;
-
-std::array<sfC::Picture_t, 5> data::main_menu::buttons = {
-    sfC::Picture_t("../Images/buttons2.png", data::main_menu::pressed, sf::Vector2f(sfCON::WindowWidth / 3, sfCON::WindowHeight / 10), sf::Color(255, 255, 255), sf::Vector2f(1.2f, 1.2f)),
-    sfC::Picture_t("../Images/buttons2.png", data::main_menu::released, sf::Vector2f(sfCON::WindowWidth / 3, sfCON::WindowHeight / 10 + 170), sf::Color(255, 255, 255), sf::Vector2f(1.2f, 1.2f)),
-    sfC::Picture_t("../Images/buttons2.png", data::main_menu::released, sf::Vector2f(sfCON::WindowWidth / 3, sfCON::WindowHeight / 10 + 340), sf::Color(255, 255, 255), sf::Vector2f(1.2f, 1.2f)),
-    sfC::Picture_t("../Images/buttons2.png", data::main_menu::released, sf::Vector2f(sfCON::WindowWidth / 3, sfCON::WindowHeight / 10 + 510), sf::Color(255, 255, 255), sf::Vector2f(1.2f, 1.2f)),
-    sfC::Picture_t("../Images/buttons2.png", data::main_menu::released, sf::Vector2f(sfCON::WindowWidth / 3, sfCON::WindowHeight / 10 + 680), sf::Color(255, 255, 255), sf::Vector2f(1.2f, 1.2f))};
-
-sfC::Text_t data::main_menu::texts[5] = {
-    sfC::Text_t("../Fonts/baltimore-nouveau.ttf", 40, sf::Vector2f(sfCON::WindowWidth / 3 + 49, sfCON::WindowHeight / 10 + 13), "PLAY"),
-    sfC::Text_t("../Fonts/baltimore-nouveau.ttf", 22, sf::Vector2f(sfCON::WindowWidth / 3 + 46, sfCON::WindowHeight / 10 + 196), "Restart"),
-    sfC::Text_t("../Fonts/baltimore-nouveau.ttf", 22, sf::Vector2f(sfCON::WindowWidth / 3 + 23, sfCON::WindowHeight / 10 + 368), "Downaload"),
-    sfC::Text_t("../Fonts/baltimore-nouveau.ttf", 22, sf::Vector2f(sfCON::WindowWidth / 3 + 56, sfCON::WindowHeight / 10 + 536), "Create"),
-    sfC::Text_t("../Fonts/baltimore-nouveau.ttf", 22, sf::Vector2f(sfCON::WindowWidth / 3 + 83, sfCON::WindowHeight / 10 + 707), "Exit")};
-////////////////////////////////////////
+//!Should be deleted
+#include "../../Menus/Main/MenusMain.hpp"
 
 //data::menu_cars
 //**************************************
@@ -249,7 +229,7 @@ sfC::Picture_t data::set_map::direct_back("../Images/direct.png", sf::IntRect(10
 //Prepare data
 void prepare_data()
 {
-    prepare_data_main_menu();
+    sfDATA::MainMenu::prepare_data_main_menu();
 
     prepare_data_create_map();
     prepare_data_menu_cars();
@@ -257,12 +237,6 @@ void prepare_data()
     prepare_data_main_game();
 
     prepare_data_map_prot();
-}
-
-void prepare_data_main_menu()
-{
-    for (auto &text : data::main_menu::texts)
-        text.set_color(sf::Color::Blue);
 }
 
 void prepare_data_menu_cars()

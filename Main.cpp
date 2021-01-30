@@ -1,4 +1,5 @@
 #include "Actions/Actions.hpp"
+#include "Menus/Main/MenusMain.hpp"
 
 int main()
 {
@@ -7,7 +8,7 @@ int main()
 
     while (window.isOpen())
     {
-        if (!MainMenu(window))
+        if (!sfDATA::MainMenu::ChechMainMenu(window))
         {
             window.close();
             break;
