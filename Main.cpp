@@ -1,5 +1,4 @@
 #include "Actions/Actions.hpp"
-
 #include "Menus/Main/MenusMain.hpp"
 
 int main()

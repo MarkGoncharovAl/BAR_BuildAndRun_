@@ -27,13 +27,13 @@ add_subdirectory(Menus/Main)
 
 message("Building!")
 add_executable(
-    main 
+    run
     Main.cpp  
     Actions/Actions.cpp
 )
 
 target_link_libraries(
-    main 
+    run 
     
     sfml-graphics 
     sfml-audio 
