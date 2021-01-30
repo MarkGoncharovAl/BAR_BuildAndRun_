@@ -16,39 +16,11 @@
 void prepare_data();
 
 void prepare_data_create_map();
-void prepare_data_menu_cars();
 void prepare_data_main_game();
 void prepare_data_map_prot();
 
 struct data
 {
-
-    class menu_cars
-    {
-        static sfC::Picture_t main_pic;
-
-        static std::string file_buttons;
-        static sf::IntRect tex_rect;
-
-        static std::array<sfC::Picture_t, 4> main_buttons;
-
-        static std::array<sfC::Picture_t, 8> buttons;
-        static std::array<sfC::Text_t, 6> texts;
-
-        static std::array<sfC::Text_t, 8> levels;
-
-        static sfC::Picture_t car1;
-        static sfC::Picture_t car2;
-        static sfC::MenuCars_t data;
-
-        static sfC::ParamCar_t sort1;
-        static sfC::ParamCar_t sort2;
-
-        friend void Full_Restart();
-        friend bool AnalyseMenuCars(sf::RenderWindow &);
-        friend bool MenuCars(sf::RenderWindow &window);
-        friend void prepare_data_menu_cars();
-    };
 
     class main_game
     {

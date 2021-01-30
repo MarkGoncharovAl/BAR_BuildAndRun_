@@ -1,5 +1,6 @@
 #include "MenusMain.hpp"
 #include "../../Help/Help.hpp"
+#include "../Car/MenusCar.hpp"
 
 //!SHOULD BE DELETED
 //////////////!
@@ -116,11 +117,11 @@ bool sfDATA::MainMenu::ActionPress(sf::RenderWindow &window, int press)
     switch (press)
     {
     case type_button_::GAME:
-        MenuCars(window);
+        MenuCars::CheckMenuCars(window);
         return false;
 
     case type_button_::RESTART:
-        Full_Restart();
+        MainMenu::Full_Restart();
         ShowDoneAction(window, "Restarted");
         return true;
 
@@ -169,4 +170,10 @@ void sfDATA::MainMenu::prepare_data_main_menu()
 {
     for (auto &text : texts_)
         text.set_color(sf::Color::Blue);
+}
+
+void sfDATA::MainMenu::Full_Restart()
+{
+    sfDATA::MenuCars::Restart();
+    ::Full_Restart();
 }

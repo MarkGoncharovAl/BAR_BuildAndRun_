@@ -10,6 +10,23 @@ namespace sfDATA
 
     class MainMenu
     {
+    public:
+        /////////////////////////////////////////////////////
+        // Check the user actions in the menu
+        // Returns false - if it's time to close menu
+        //         true  - user didn't make a choise
+        /////////////////////////////////////////////////////
+        static bool AnalyseMenu(sf::RenderWindow &window);
+
+        /////////////////////////////////////////////////////
+        // Create main menu
+        // Returns false - if menu was closen
+        //         true  - never now))
+        /////////////////////////////////////////////////////
+        static bool ChechMainMenu(sf::RenderWindow &window);
+
+        static void prepare_data_main_menu();
+
     private:
         static sf::IntRect released_;
         static sf::IntRect pressed_;
@@ -35,23 +52,7 @@ namespace sfDATA
         // if (!ActionPress(...)) return ...
         /////////////////////
         static bool ActionPress(sf::RenderWindow &window, int press);
-
-    public:
-        /////////////////////////////////////////////////////
-        // Check the user actions in the menu
-        // Returns false - if it's time to close menu
-        //         true  - user didn't make a choise
-        /////////////////////////////////////////////////////
-        static bool AnalyseMenu(sf::RenderWindow &window);
-
-        /////////////////////////////////////////////////////
-        // Create main menu
-        // Returns false - if menu was closen
-        //         true  - never now))
-        /////////////////////////////////////////////////////
-        static bool ChechMainMenu(sf::RenderWindow &window);
-
-        static void prepare_data_main_menu();
+        static void Full_Restart();
     };
 
 } // namespace sfDATA

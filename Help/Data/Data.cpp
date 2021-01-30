@@ -2,56 +2,7 @@
 
 //!Should be deleted
 #include "../../Menus/Main/MenusMain.hpp"
-
-//data::menu_cars
-//**************************************
-sfC::Picture_t data::menu_cars::main_pic("../Images/menu3.png", sf::IntRect(0, 0, sfCON::WindowWidth, sfCON::WindowHeight), sf::Vector2f(0, 0));
-
-std::string data::menu_cars::file_buttons("../Images/buttons2.png");
-sf::IntRect data::menu_cars::tex_rect(32, 498, 198, 64);
-
-std::array<sfC::Picture_t, 4> data::menu_cars::main_buttons = {
-    sfC::Picture_t(data::menu_cars::file_buttons, sf::IntRect(32, 377, 198, 64), sf::Vector2f(sfCON::WindowWidth / 2.2f - 15.f, sfCON::WindowHeight / 10.f), sf::Color(sf::Color::White)),
-    sfC::Picture_t(data::menu_cars::file_buttons, sf::IntRect(32, 377, 198, 64), sf::Vector2f(sfCON::WindowWidth / 2.2f - 15.f, sfCON::WindowHeight / 6.f), sf::Color(sf::Color::White)),
-    sfC::Picture_t("../Images/direction.png", sf::IntRect(40, 133, 1231, 1037), sf::Vector2f(30.f, 620.f), sf::Color(sf::Color::White), sf::Vector2f(0.05f, 0.05f)),
-    sfC::Picture_t("../Images/direction.png", sf::IntRect(1271, 133, -1231, 1037), sf::Vector2f(1793.f, 620.f), sf::Color(sf::Color::White), sf::Vector2f(0.05f, 0.05f)),
-};
-
-std::array<sfC::Picture_t, 8> data::menu_cars::buttons = {
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 20, sfCON::WindowHeight / 1.8f), sf::Color(255, 255, 255)),
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 20, sfCON::WindowHeight / 1.8f + 100), sf::Color(255, 255, 255)),
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 20, sfCON::WindowHeight / 1.8f + 200), sf::Color(255, 255, 255)),
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 20, sfCON::WindowHeight / 1.8f + 300), sf::Color(255, 255, 255)),
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 1.3f, sfCON::WindowHeight / 1.8f), sf::Color(255, 255, 255)),
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 1.3f, sfCON::WindowHeight / 1.8f + 100), sf::Color(255, 255, 255)),
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 1.3f, sfCON::WindowHeight / 1.8f + 200), sf::Color(255, 255, 255)),
-    sfC::Picture_t(data::menu_cars::file_buttons, data::menu_cars::tex_rect, sf::Vector2f(sfCON::WindowWidth / 1.3f, sfCON::WindowHeight / 1.8f + 300), sf::Color(255, 255, 255)),
-};
-std::array<sfC::Text_t, 6> data::menu_cars::texts = {
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 70, sf::Vector2f(sfCON::WindowWidth / 3 + 100, sfCON::WindowHeight / 1.8f + 10), "Acceleration"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 70, sf::Vector2f(sfCON::WindowWidth / 3 + 150, sfCON::WindowHeight / 1.8f + 110), "Max speed"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 70, sf::Vector2f(sfCON::WindowWidth / 3 + 80, sfCON::WindowHeight / 1.8f + 210), "Rotate speed"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 70, sf::Vector2f(sfCON::WindowWidth / 3 + 170, sfCON::WindowHeight / 1.8f + 310), "Controll"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 45, sf::Vector2f(sfCON::WindowWidth / 2.1f - 25.f, sfCON::WindowHeight / 9.7f), "PLAY"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 45, sf::Vector2f(sfCON::WindowWidth / 2.1f - 25.f, sfCON::WindowHeight / 5.8f), "EXIT")};
-
-std::array<sfC::Text_t, 8> data::menu_cars::levels = {
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 20 + 140, sfCON::WindowHeight / 1.8f + 10), "0"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 20 + 140, sfCON::WindowHeight / 1.8f + 110), "0"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 20 + 140, sfCON::WindowHeight / 1.8f + 210), "0"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 20 + 140, sfCON::WindowHeight / 1.8f + 310), "0"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 1.3f + 140, sfCON::WindowHeight / 1.8f + 10), "0"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 1.3f + 140, sfCON::WindowHeight / 1.8f + 110), "0"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 1.3f + 140, sfCON::WindowHeight / 1.8f + 210), "0"),
-    sfC::Text_t("../Fonts/nfs-mw3.ttf", 60, sf::Vector2f(sfCON::WindowWidth / 1.3f + 140, sfCON::WindowHeight / 1.8f + 310), "0")};
-
-sfC::Picture_t data::menu_cars::car1("../Images/cars.png", sf::IntRect(93, 268, 44, 78), sf::Vector2f(1640.f, 150.f), sf::Color(255, 255, 255), sf::Vector2f(2.f, 2.f));
-sfC::Picture_t data::menu_cars::car2("../Images/cars.png", sf::IntRect(93, 138, 44, 78), sf::Vector2f(260.f, 150.f), sf::Color(255, 255, 255), sf::Vector2f(2.f, 2.f));
-sfC::MenuCars_t data::menu_cars::data;
-
-sfC::ParamCar_t data::menu_cars::sort1 = sfCON::sort_tank_BASE;
-sfC::ParamCar_t data::menu_cars::sort2 = sfCON::sort_tank_BASE;
-//**************************************
+#include "../../Menus/Car/MenusCar.hpp"
 
 //data::main_game
 //--------------------------------------
@@ -232,35 +183,11 @@ void prepare_data()
     sfDATA::MainMenu::prepare_data_main_menu();
 
     prepare_data_create_map();
-    prepare_data_menu_cars();
+    sfDATA::MainMenu::prepare_data_main_menu();
 
     prepare_data_main_game();
 
     prepare_data_map_prot();
-}
-
-void prepare_data_menu_cars()
-{
-    for (auto &pic : data::menu_cars::buttons)
-        pic.set_scale(1.6f, 1.6f);
-
-    int texts_num = 0;
-    for (auto &text : data::menu_cars::texts)
-    {
-        if (texts_num == 4 || texts_num == 5)
-            text.set_color(sf::Color::Black);
-        else
-            text.set_color(sf::Color::Magenta);
-        texts_num++;
-    }
-
-    for (auto &level : data::menu_cars::levels)
-        level.set_color(sf::Color::Blue);
-
-    sf::FloatRect car1 = data::menu_cars::car1.get_loc_bounds();
-    sf::FloatRect car2 = data::menu_cars::car2.get_loc_bounds();
-    data::menu_cars::car1.set_origin(car1.width / 2.f, car1.height / 2.f);
-    data::menu_cars::car2.set_origin(car2.width / 2.f, car2.height / 2.f);
 }
 
 void prepare_data_main_game()

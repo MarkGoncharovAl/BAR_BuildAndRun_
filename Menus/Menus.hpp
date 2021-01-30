@@ -8,15 +8,6 @@
 #include "../Help/Text/Text.hpp"
 #include "../Map/Map.hpp"
 
-/////////////////////////////////////////////////////
-// Menu where user can create a car
-/////////////////////////////////////////////////////
-bool AnalyseMenuCars(sf::RenderWindow &window, int cout_blocks);
-/////////////////////////////////////////////////////
-// Menu where user can create a car
-/////////////////////////////////////////////////////
-bool MenuCars(sf::RenderWindow &window);
-
 bool AnalyseWait_Text_User(sf::RenderWindow &window, std::string &text, sfC::Text_t &user_text);
 std::string Wait_Text_User(sf::RenderWindow &window);
 
