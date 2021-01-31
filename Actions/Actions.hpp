@@ -10,8 +10,7 @@
 #include "../Help/Help.hpp"
 #include "../Help/Data/Data.hpp"
 #include "../Common_libs/Errors/Errors.hpp"
-
-void Full_Restart();
+#include "../Help/Direction/Direction.hpp"
 
 /////////////////////////////////////////////////////
 // Check the user actions in the game
@@ -40,5 +39,3 @@ bool CheckWin();
 /////////////////////////////////////////////////////
 
 void change_data_cars(sfC::ParamCar_t &sort, int proper, sfC::ParamCar_t::Do action = sfC::ParamCar_t::Do::Increase);
-
-void ShowDoneAction(sf::RenderWindow &window, const std::string &info, const std::string &info2 = std::string());

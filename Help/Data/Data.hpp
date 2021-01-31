@@ -19,6 +19,12 @@ void prepare_data_create_map();
 void prepare_data_main_game();
 void prepare_data_map_prot();
 
+namespace sfDATA
+{
+    void ShowDoneAction(sf::RenderWindow &window, const std::string &info1, const std::string &info2 = std::string());
+    void Full_Restart();
+} // namespace sfDATA
+
 struct data
 {
 
@@ -43,7 +49,7 @@ struct data
         //////////////////////
         static bool read_map(const std::string &file, sfC::Map &cur_map = data::main_game::map);
 
-        friend void Full_Restart();
+        friend void sfDATA::Full_Restart();
         friend bool AnalyseGame(sf::RenderWindow &, float);
         friend bool MainGame(sf::RenderWindow &, const sfC::ParamCar_t &, const sfC::ParamCar_t &);
         friend bool CheckWin();
@@ -144,7 +150,7 @@ struct data
 
         static sfC::Text_t show_down_action1;
         static sfC::Text_t show_down_action2;
-        friend void ShowDoneAction(sf::RenderWindow &, const std::string &, const std::string &);
+        friend void sfDATA::ShowDoneAction(sf::RenderWindow &, const std::string &, const std::string &);
     };
 
     class set_map

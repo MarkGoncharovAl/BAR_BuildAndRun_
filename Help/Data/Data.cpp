@@ -2,7 +2,6 @@
 
 //!Should be deleted
 #include "../../Menus/Main/MenusMain.hpp"
-#include "../../Menus/Car/MenusCar.hpp"
 
 //data::main_game
 //--------------------------------------
@@ -175,6 +174,54 @@ sfC::Text_t data::set_map::main_text("../Fonts/nfs-mw3.ttf", 100, sf::Vector2f(s
 size_t data::set_map::cur_map = 0;
 sfC::Text_t data::set_map::cur_text("../Fonts/19413.ttf", 200, sf::Vector2f(sfCON::WindowWidth * 0.1f, sfCON::WindowHeight * 0.5f), "");
 sfC::Picture_t data::set_map::direct_back("../Images/direct.png", sf::IntRect(109, 22, -87, 59), sf::Vector2f(0.f, 0.f), sf::Color::White);
+
+void sfDATA::ShowDoneAction(sf::RenderWindow &window, const std::string &info1, const std::string &info2 /* = std::string()*/)
+{
+    using cur_data = data::text;
+    constexpr int64_t max_time = 1000000;
+
+    cur_data::show_down_action1.set_text(info1);
+    cur_data::show_down_action2.set_text(info2);
+    sf::Clock clock;
+    clock.restart();
+
+    if (info2.empty())
+    {
+        while (window.isOpen() && clock.getElapsedTime().asMicroseconds() < max_time)
+        {
+
+            window.clear();
+
+            window.draw(cur_data::background.for_draw());
+            window.draw(cur_data::show_down_action1.for_draw());
+
+            window.display();
+        }
+    }
+    else
+    {
+        while (window.isOpen() && clock.getElapsedTime().asMicroseconds() < max_time)
+        {
+
+            window.clear();
+
+            window.draw(cur_data::background.for_draw());
+            window.draw(cur_data::show_down_action1.for_draw());
+            window.draw(cur_data::show_down_action2.for_draw());
+
+            window.display();
+        }
+    }
+}
+
+void sfDATA::Full_Restart()
+{
+    sfF::RestartCar(data::main_game::tank1);
+    sfF::RestartCar(data::main_game::tank2);
+
+    data::main_game::texts[1].set_text("0");
+    data::main_game::texts[3].set_text("0");
+}
 //((((((((((((((((((((((((((((((((((((((
 
 //Prepare data

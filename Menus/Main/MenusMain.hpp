@@ -25,6 +25,8 @@ namespace sfDATA
         /////////////////////////////////////////////////////
         static bool ChechMainMenu(sf::RenderWindow &window);
 
+        static void ShowDoneAction(sf::RenderWindow &window, const std::string &info, const std::string &info2 = std::string());
+
         static void prepare_data_main_menu();
 
     private:

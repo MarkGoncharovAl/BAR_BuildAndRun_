@@ -1,12 +1,8 @@
 #include "MenusMain.hpp"
 #include "../../Help/Help.hpp"
-#include "../Car/MenusCar.hpp"
 
 //!SHOULD BE DELETED
 //////////////!
-//ShowDoneAction
-//FullRestart
-#include "../../Actions/Actions.hpp"
 
 #include "../Menus.hpp"
 //////////////!
@@ -175,5 +171,5 @@ void sfDATA::MainMenu::prepare_data_main_menu()
 void sfDATA::MainMenu::Full_Restart()
 {
     sfDATA::MenuCars::Restart();
-    ::Full_Restart();
+    sfDATA::Full_Restart();
 }
