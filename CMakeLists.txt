@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.10)
 project(Main VERSION 1.0.0)
 
 if(NOT CMAKE_BUILD_TYPE)
@@ -9,7 +9,7 @@ set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3") 
 
-find_package(SFML 2.5 COMPONENTS graphics audio REQUIRED)
+find_package(SFML 2 COMPONENTS graphics audio REQUIRED)
 
 add_subdirectory(Common_libs/Errors)
 add_subdirectory(Common_libs/Random)
