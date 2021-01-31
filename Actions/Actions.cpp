@@ -1,4 +1,24 @@
 #include "Actions.hpp"
+#include "../Help/Direction/Direction.hpp"
+
+void Full_Restart()
+{
+    data::menu_cars::data.restart();
+    data::menu_cars::main_buttons[2].set_position(30.f, 620.f);
+    data::menu_cars::main_buttons[3].set_position(1793.f, 620.f);
+
+    data::menu_cars::sort1 = sfCON::sort_tank_BASE;
+    data::menu_cars::sort2 = sfCON::sort_tank_BASE;
+
+    for (auto &text : data::menu_cars::levels)
+        text.set_text("0");
+
+    sfF::RestartCar(data::main_game::tank1);
+    sfF::RestartCar(data::main_game::tank2);
+
+    data::main_game::texts[1].set_text("0");
+    data::main_game::texts[3].set_text("0");
+}
 
 bool AnalyseGame(sf::RenderWindow &window, float time)
 {
@@ -18,7 +38,7 @@ bool AnalyseGame(sf::RenderWindow &window, float time)
 
         if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape)
         {
-            sfDATA::MenuCars::CheckMenuCars(window);
+            MenuCars(window);
             return false;
         }
 
@@ -107,4 +127,43 @@ bool CheckWin()
 void change_data_cars(sfC::ParamCar_t &sort, int proper, sfC::ParamCar_t::Do action /* = sfC::ParamCar_t::Do::Increase*/)
 {
     sort.CorrectProperties(proper, action);
+}
+
+void ShowDoneAction(sf::RenderWindow &window, const std::string &info1, const std::string &info2 /* = std::string()*/)
+{
+    using cur_data = data::text;
+    constexpr int64_t max_time = 1000000;
+
+    cur_data::show_down_action1.set_text(info1);
+    cur_data::show_down_action2.set_text(info2);
+    sf::Clock clock;
+    clock.restart();
+
+    if (info2.empty())
+    {
+        while (window.isOpen() && clock.getElapsedTime().asMicroseconds() < max_time)
+        {
+
+            window.clear();
+
+            window.draw(cur_data::background.for_draw());
+            window.draw(cur_data::show_down_action1.for_draw());
+
+            window.display();
+        }
+    }
+    else
+    {
+        while (window.isOpen() && clock.getElapsedTime().asMicroseconds() < max_time)
+        {
+
+            window.clear();
+
+            window.draw(cur_data::background.for_draw());
+            window.draw(cur_data::show_down_action1.for_draw());
+            window.draw(cur_data::show_down_action2.for_draw());
+
+            window.display();
+        }
+    }
 }
