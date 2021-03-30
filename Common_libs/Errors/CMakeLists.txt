@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(Error VERSION 1.0.0)
+project(Errors VERSION 1.0.0)
 
 add_library(
     Errors

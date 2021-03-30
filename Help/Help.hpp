@@ -26,6 +26,7 @@ namespace sfF
     sf::Vector2f get_view_position(const sf::View &view);
     float get_view_position_x(const sf::View &view);
     float get_view_position_y(const sf::View &view);
+    bool AnalyseWait_Text_User (sf::RenderWindow& window , std::string& text , sfC::Text_t& user_text);
 
 } // namespace sfF
 
