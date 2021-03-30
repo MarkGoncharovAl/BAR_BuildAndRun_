@@ -1,14 +1,13 @@
-#include "Actions/Actions.hpp"
-#include "Menus/Main/MenusMain.hpp"
+#include "MainMenus/MainMenus.hpp"
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "SFML works!", sf::Style::Fullscreen);
-    prepare_data();
+    sfDATA::PrepareData();
 
     while (window.isOpen())
     {
-        if (!sfDATA::MainMenu::ChechMainMenu(window))
+        if (!sfDATA::MainMenu_t::MainMenu(window))
         {
             window.close();
             break;
