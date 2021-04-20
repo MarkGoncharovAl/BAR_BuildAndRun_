@@ -6,4 +6,3 @@ add_library(
     Errors.hpp
     Errors.cpp
 )
-

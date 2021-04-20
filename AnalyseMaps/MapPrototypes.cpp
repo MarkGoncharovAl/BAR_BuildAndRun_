@@ -31,7 +31,10 @@ void sfDATA::MapPrototypes_t::write_map_into_file (const std::string& file , con
 
     map.dump_interrior (out);
     if (!out.good ())
-        ERROR ("File wasn't writen down properly!");
+    {
+        LOG_error << "File wasn't writen down properly!";
+        exit (EXIT_FAILURE);
+    }
 
     out.close ();
 }
@@ -47,8 +50,10 @@ void sfDATA::MapPrototypes_t::PrepareData ()
 {
     std::ifstream cur_file (sfDATA::MapPrototypes_t::main_file , std::ios::in);
     if (!cur_file.is_open ())
-        ERROR (std::string ("Can't open the main file ") + sfDATA::MapPrototypes_t::main_file);
-
+    {
+        LOG_error << std::string ("Can't open the main file ") + sfDATA::MapPrototypes_t::main_file;
+        exit (EXIT_FAILURE);
+    }
     while (!cur_file.eof ())
     {
         std::string cur_str;

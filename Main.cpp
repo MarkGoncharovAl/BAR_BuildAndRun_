@@ -2,14 +2,15 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "SFML works!", sf::Style::Fullscreen);
+    sf::RenderWindow cur_window(sf::VideoMode::getDesktopMode(), "BAR", sf::Style::Default);
+    sfC::Window window{cur_window};
     sfDATA::PrepareData();
 
-    while (window.isOpen())
+    while (window->isOpen())
     {
         if (!sfDATA::MainMenu_t::MainMenu(window))
         {
-            window.close();
+            window->close();
             break;
         }
     }

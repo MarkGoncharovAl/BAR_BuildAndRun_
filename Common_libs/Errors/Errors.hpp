@@ -1,34 +1,44 @@
 #pragma once
-#include <iostream>
+#include "Errors_DEFINES.hpp"
 
-namespace help
-{
-    [[noreturn]] inline void print_error(std::string info, std::string FILE, std::size_t LINE)
-    {
-        std::cout << std::endl
-                  << info << std::endl;
-        std::cout << "Mistake was found in file " << FILE;
-        std::cout << "\nMistake was found in line " << LINE << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    inline void print_warning(std::string info, std::string FILE, std::size_t LINE)
-    {
-        std::cout << std::endl
-                  << info << std::endl;
-        std::cout << "Warning was found in file " << FILE;
-        std::cout << "\nWarning was found in line " << LINE << std::endl;
-    }
+// level = fatal / error / warning / debug / trace
 
-    template <class T>
-    inline void debug_print(const T &elem1, const T &elem2 = T{})
-    {
-        std::cout << "Debagging is starting!\n"
-                  << elem1 << "\t" << elem2 << "\nDebagging is ending";
-    }
-} // namespace help
+// Want change directory -> log::ChangeDirectory(string)
 
-#define ERROR(str) help::print_error(str, __FILE__, __LINE__)
-#define WARNING(str) help::print_warning(str, __FILE__, __LINE__)
+// SetFilter -> Set Flag:
+//TRACE - everything will be printed
+//DEBUG - not trace
+//WARNING - warnings errors and fatals - DEFAULT
+//ERROR - errors + fatal
 
-#define DEBUG1(elem1) help::debug_print(elem1)
-#define DEBUG2(elem1, elem2) help::debug_print(elem1, elem2)
+#ifndef LOG_LEVEL
+
+#ifdef TRACE
+#define LOG_LEVEL 2
+
+#else //Not TRACE
+#ifdef DEBUG //Not TRACE
+#define LOG_LEVEL 1
+
+#else //Not TRACE + Not DEBUG
+#ifdef WARNING //Not TRACE + Not DEBUG
+#define LOG_LEVEL 0
+
+#else //Not TRACE + Not DEBUG + Not WARNING
+#ifdef ERROR 
+#define LOG_LEVEL -1
+
+#else //Default case
+#define LOG_LEVEL 0
+
+#endif //ERROR
+#endif //WARNING
+#endif //DEBUG
+#endif //TRACE
+#endif //ifdef LOG_LEVEL
+
+#define LOG_fatal if constexpr (LOG_LEVEL >= -2) MLib_Error::MAIN_LOG_OBJ.Log<lvl::fatal>(__FILE__, __LINE__)
+#define LOG_error if constexpr (LOG_LEVEL >= -1) MLib_Error::MAIN_LOG_OBJ.Log<lvl::error>(__FILE__, __LINE__)
+#define LOG_warning if constexpr (LOG_LEVEL >= 0) MLib_Error::MAIN_LOG_OBJ.Log<lvl::warning>(__FILE__, __LINE__)
+#define LOG_debug if constexpr (LOG_LEVEL >= 1) MLib_Error::MAIN_LOG_OBJ.Log<lvl::debug>(__FILE__, __LINE__)
+#define LOG_trace if constexpr (LOG_LEVEL >= 2) MLib_Error::MAIN_LOG_OBJ.Log<lvl::trace>(__FILE__, __LINE__)

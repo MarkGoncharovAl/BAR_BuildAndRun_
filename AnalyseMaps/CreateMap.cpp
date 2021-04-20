@@ -76,25 +76,25 @@ void sfDATA::CreateMap_t::clear_stack () noexcept
 
 void sfDATA::CreateMap_t::PrepareData ()
 {
-    MainGame_t::PrepareData (sfDATA::CreateMap_t::map);
+    MainGame_t::PrepareData (map);
 
-    sfDATA::CreateMap_t::keys.insert (std::make_pair (sfDATA::CreateMap_t::data_for_keys::Button_Left , false));
-    sfDATA::CreateMap_t::keys.insert (std::make_pair (sfDATA::CreateMap_t::data_for_keys::Ctrl , false));
-    sfDATA::CreateMap_t::keys.insert (std::make_pair (sfDATA::CreateMap_t::data_for_keys::Z , false));
-    sfDATA::CreateMap_t::keys.insert (std::make_pair (sfDATA::CreateMap_t::data_for_keys::Mouse_Down , false));
-    sfDATA::CreateMap_t::keys.insert (std::make_pair (sfDATA::CreateMap_t::data_for_keys::Mouse_Up , false));
-    sfDATA::CreateMap_t::keys.insert (std::make_pair (sfDATA::CreateMap_t::data_for_keys::Mouse_Right , false));
-    sfDATA::CreateMap_t::keys.insert (std::make_pair (sfDATA::CreateMap_t::data_for_keys::Mouse_Left , false));
+    keys.insert (std::make_pair (data_for_keys::Button_Left , false));
+    keys.insert (std::make_pair (data_for_keys::Ctrl , false));
+    keys.insert (std::make_pair (data_for_keys::Z , false));
+    keys.insert (std::make_pair (data_for_keys::Mouse_Down , false));
+    keys.insert (std::make_pair (data_for_keys::Mouse_Up , false));
+    keys.insert (std::make_pair (data_for_keys::Mouse_Right , false));
+    keys.insert (std::make_pair (data_for_keys::Mouse_Left , false));
 }
 //++++++++++++++++++++++++++++++++++++++
 
 // !sfDATA::Text_t
 //((((((((((((((((((((((((((((((((((((((
 
-bool sfDATA::CreateMap_t::AnalyseCreateMap (sf::RenderWindow& window)
+bool sfDATA::CreateMap_t::AnalyseCreateMap (sfC::Window& window)
 {
     sf::Event event;
-    while (window.pollEvent (event))
+    while (window->pollEvent (event))
     {
         if (event.type == sf::Event::Closed)
             return false;
@@ -160,12 +160,12 @@ bool sfDATA::CreateMap_t::AnalyseCreateMap (sf::RenderWindow& window)
 
                     if (!new_name.empty ())
                     {
-                        sfDATA::Text_t::ShowDoneAction (window , new_name , "created");
+                        sfF::ShowDoneAction (window , new_name , "created");
                         sfDATA::MapPrototypes_t::insert_map (new_name , map.get_map_prototype ());
                     }
                     else
                     {
-                        sfDATA::Text_t::ShowDoneAction (window , "Not created!");
+                        sfF::ShowDoneAction (window , "Not created!");
                     }
                 }
                 break;
@@ -188,7 +188,7 @@ bool sfDATA::CreateMap_t::AnalyseCreateMap (sf::RenderWindow& window)
                 cur_block = sfC::BlockPrototype::TypeBlock::Restart;
                 break;
             case sf::Keyboard::Escape:
-                sfDATA::Text_t::ShowDoneAction (window , "Not created");
+                sfF::ShowDoneAction (window , "Not created");
                 return false;
                 break;
             default:
@@ -218,25 +218,21 @@ bool sfDATA::CreateMap_t::AnalyseCreateMap (sf::RenderWindow& window)
     return true;
 }
 
-bool sfDATA::CreateMap_t::CreateMap (sf::RenderWindow& window)
+bool sfDATA::CreateMap_t::CreateMap (sfC::Window& window)
 {
     sfDATA::SetMap_t::PrepareCreateMap (window , map);
 
-    while (window.isOpen ())
+    while (window->isOpen ())
     {
         if (!AnalyseCreateMap (window))
             break;
 
-        window.clear ();
-
-        window.setView (view);
-        window.draw (map);
-
+        window->setView (view);
         info_user.set_position (
             sfF::get_view_position_x (view) ,
             765.f + sfF::get_view_position_y (view));
-        window.draw (info_user.for_draw ());
-        window.display ();
+        
+        window.Draw(map, info_user);
     }
 
     return false;

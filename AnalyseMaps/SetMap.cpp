@@ -40,28 +40,28 @@ void sfDATA::SetMap_t::DecreaseMap ()
     }
 }
 
-void sfDATA::SetMap_t::DrawEverything (sf::RenderWindow& window)
+void sfDATA::SetMap_t::DrawEverything (sfC::Window& window)
 {
-    window.draw (main_text.for_draw ());
-    window.draw (cur_text.for_draw ());
-    window.draw (direct_back.for_draw ());
+    window.AddArgs (main_text , cur_text , direct_back);
 }
 
-bool sfDATA::SetMap_t::AnalysePrepareCreateMap (sf::RenderWindow& window)
+sfDATA::SetMap_t::OutT sfDATA::SetMap_t::AnalysePrepareCreateMap (sfC::Window& window)
 {
     sf::Event event;
-    while (window.pollEvent (event))
+    bool anything_done = false;
+    while (window->pollEvent (event))
     {
         if (event.type == sf::Event::KeyPressed)
         {
             switch (event.key.code)
             {
             case sf::Keyboard::Enter:
-                sfDATA::Text_t::ShowDoneAction (window , cur_text.get_text () , "selected");
-                return false;
+                sfF::ShowDoneAction (window , cur_text.get_text () , "selected");
+                return OutT::Exit;
             case sf::Keyboard::Right:
                 if (cur_map + 1 < sfDATA::MapPrototypes_t::GetSizeMaps ())
                 {
+                    anything_done = true;
                     cur_map += 1;
                     cur_text.set_text (sfDATA::MapPrototypes_t::GetNameMap (cur_map));
                 }
@@ -69,6 +69,7 @@ bool sfDATA::SetMap_t::AnalysePrepareCreateMap (sf::RenderWindow& window)
             case sf::Keyboard::Left:
                 if (cur_map > 0)
                 {
+                    anything_done = true;
                     cur_map--;
                     cur_text.set_text (sfDATA::MapPrototypes_t::GetNameMap (cur_map));
                 }
@@ -78,23 +79,34 @@ bool sfDATA::SetMap_t::AnalysePrepareCreateMap (sf::RenderWindow& window)
             }
         }
     }
-    return true;
+
+    if (anything_done)
+        return OutT::Changed;
+    return OutT::Continue;
 }
-void sfDATA::SetMap_t::PrepareCreateMap (sf::RenderWindow& window , sfC::Map& map)
+
+void sfDATA::SetMap_t::PrepareCreateMap (sfC::Window& window , sfC::Map& map)
 {
     sfDATA::Text_t::CorrectView (window);
+    window.Draw (sfCON::Saving2PNG , main_text , cur_text);
 
-    while (window.isOpen ())
+    std::cout << "A\n";
+    while (window->isOpen ())
     {
-        if (!AnalysePrepareCreateMap (window))
+        switch (AnalysePrepareCreateMap (window))
+        {
+        case OutT::Changed:
+            window.Draw (sfCON::Saving2PNG , main_text , cur_text);
             break;
-
-        window.clear ();
-        window.draw (sfDATA::Text_t::BackgroundDraw ());
-        window.draw (main_text.for_draw ());
-        window.draw (cur_text.for_draw ());
-        window.display ();
+        case OutT::Continue:
+            break;
+        case OutT::Error:
+            return;
+        case OutT::Exit:
+            goto exit;
+        };
     }
 
+exit:
     sfDATA::MainGame_t::read_map (cur_text.get_text () , map);
 }

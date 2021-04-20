@@ -13,7 +13,8 @@ sfC::Object_t::Object_t(sfC::Map *map, const std::string &file, const sf::IntRec
 {
     if (!image_.loadFromFile(file))
     {
-        ERROR(std::string("Can't find a file for object: ") + file);
+        LOG_error << "Can't find a file for object: " << file;
+        exit(1);
     }
 
     image_.createMaskFromColor(color);

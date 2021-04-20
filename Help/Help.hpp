@@ -4,7 +4,11 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include "Text/Text.hpp"
+#include "Picture/Picture.hpp"
 #include "ParamCar/ParamCar.hpp"
+#include "FastDraw.hpp"
+
+#include "DefinesFile.hpp"
 
 namespace sfF
 {
@@ -26,7 +30,9 @@ namespace sfF
     sf::Vector2f get_view_position(const sf::View &view);
     float get_view_position_x(const sf::View &view);
     float get_view_position_y(const sf::View &view);
-    bool AnalyseWait_Text_User (sf::RenderWindow& window , std::string& text , sfC::Text_t& user_text);
+    bool AnalyseWait_Text_User (sfC::Window& window , std::string& text , sfC::Text_t& user_text);
+    void SetDefaultView(sfC::Window& window);
+    void ShowDoneAction(sfC::Window& window, std::string const& text1, std::string const& text2 = "");
 
 } // namespace sfF
 
@@ -64,4 +70,5 @@ namespace sfCON
     constexpr float controll_tank_rank = (sort_tank_IDEAL.GetDriftSpeed() - sort_tank_BASE.GetDriftSpeed()) / levels;
     constexpr float decell_tank_rank = (sort_tank_IDEAL.GetDeceleration() - sort_tank_BASE.GetDeceleration()) / levels;
 
+    static const sfC::Picture_t Saving2PNG("../Images/Saving2.png" , sf::IntRect (0 , 0 , sfCON::WindowWidth , sfCON::WindowHeight) , sf::Vector2f (0.f , 0.f) , sf::Color::Magenta);
 } // namespace sfCON

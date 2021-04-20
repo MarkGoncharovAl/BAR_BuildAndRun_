@@ -116,7 +116,7 @@ struct iterator
         {
             if (data_ >= end_data_)
             {
-                WARNING("Reaching out of massive! Returning default object!");
+                LOG_warning << ("Reaching out of massive! Returning default object!");
                 return Type_t{};
             }
 

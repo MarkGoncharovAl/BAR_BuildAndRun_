@@ -43,6 +43,8 @@ namespace sfC
         /////////////////////////////////////////////////////
         const sf::Text &for_draw() const { return text_; }
 
+        explicit operator bool () const noexcept { return !text_.getString().isEmpty(); }
+
     private:
         sf::Font font_;
         sf::Text text_;

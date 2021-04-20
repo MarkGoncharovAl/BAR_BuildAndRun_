@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Map/Map.hpp"
 #include "../Help/Picture/Picture.hpp"
+#include "../Help/FastDraw.hpp"
 
 namespace sfDATA
 {
@@ -12,8 +13,8 @@ namespace sfDATA
     {
     public:
         static void PrepareData ();
-        static bool AnalyseCreateMap (sf::RenderWindow& window);
-        static bool CreateMap (sf::RenderWindow& window);
+        static bool AnalyseCreateMap (sfC::Window& window);
+        static bool CreateMap (sfC::Window& window);
 
     private:
         static sfC::Map map;

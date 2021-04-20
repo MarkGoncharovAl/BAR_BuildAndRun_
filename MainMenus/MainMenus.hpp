@@ -11,6 +11,8 @@
 #include "../Help/Picture/Picture.hpp"
 #include "../Help/Help.hpp"
 #include "../Help/Direction/Direction.hpp"
+#include "ServerGame.hpp"
+#include "../Help/FastDraw.hpp"
 
 namespace sfDATA
 {
@@ -28,14 +30,14 @@ namespace sfDATA
         // Returns false - if it's time to close menu
         //         true  - user didn't make a choise
         /////////////////////////////////////////////////////
-        static bool AnalyseMenu (sf::RenderWindow& window);
+        static bool AnalyseMenu (sfC::Window& window);
 
         /////////////////////////////////////////////////////
         // Create main menu
         // Returns false - if menu was closen
         //         true  - never now))
         /////////////////////////////////////////////////////
-        static bool MainMenu (sf::RenderWindow& window);
+        static bool MainMenu (sfC::Window& window);
 
         static void PrepareData ();
 
@@ -43,10 +45,11 @@ namespace sfDATA
         static sf::IntRect released_;
         static sf::IntRect pressed_;
 
-        static constexpr int count_buttons_ = 5;
+        static constexpr int count_buttons_ = 6;
         enum type_button_ : int
         {
             GAME = 0 ,
+            NETWORK ,
             RESTART ,
             SET ,
             CREATE ,
@@ -63,26 +66,23 @@ namespace sfDATA
         // Returns false if function should be ended
         // if (!ActionPress(...)) return ...
         /////////////////////
-        static bool ActionPress (sf::RenderWindow& window , int press);
+        static bool ActionPress (sfC::Window& window , int press);
     };
-
-} // namespace sfDATA
-
-namespace sfDATA
-{
 
     class MenuCars_t
     {
     public:
+        enum class TypeGame { Solo , Network };
+
         static void Restart ();
         /////////////////////////////////////////////////////
         // Menu where user can create a car
         /////////////////////////////////////////////////////
-        static bool AnalyseMenuCars (sf::RenderWindow&);
+        static bool AnalyseMenuCars (sfC::Window&);
         /////////////////////////////////////////////////////
         // Menu where user can create a car
         /////////////////////////////////////////////////////
-        static bool MenuCars (sf::RenderWindow& window);
+        static bool MenuCars (sfC::Window& window , TypeGame type_game);
 
         static void PrepareData ();
 
@@ -105,6 +105,8 @@ namespace sfDATA
 
         static sfC::ParamCar_t sort1;
         static sfC::ParamCar_t sort2;
+        static TypeGame type_game_;
+
     };
 
     class MainGame_t
@@ -117,13 +119,13 @@ namespace sfDATA
         // Returns false - if game was closen or ended
         //         true  - game is working now
         /////////////////////////////////////////////////////
-        static bool AnalyseGame (sf::RenderWindow& window , float time);
+        static bool AnalyseGame (sfC::Window& window , float time);
         /////////////////////////////////////////////////////
         // Create the game
         // Returns false - if game was closen or ended
         //         true  - never now))
         /////////////////////////////////////////////////////
-        static bool MainGame (sf::RenderWindow& window , const sfC::ParamCar_t& sort1 , const sfC::ParamCar_t& sort2);
+        static bool MainGame (sfC::Window& window , const sfC::ParamCar_t& sort1 , const sfC::ParamCar_t& sort2);
         /////////////////////////////////////////////////////
         // Check: user reached the goal or not
         // Return false - if game isn't over
@@ -135,7 +137,7 @@ namespace sfDATA
         //returns true if map was read succesfully
         //false in another case
         //////////////////////
-        static bool read_map (const std::string& file , sfC::Map& cur_map = sfDATA::MainGame_t::map);
+        static bool read_map (const std::string& file , sfC::Map& cur_map = map);
 
     private:
         static std::array<sfC::Text_t , 4> texts;

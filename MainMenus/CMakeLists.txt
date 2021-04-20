@@ -6,3 +6,11 @@ add_library(
     MainMenus.hpp
     MainMenus.cpp
 )
+
+add_library(
+    ServerGame
+    Server.hpp
+    ServerGame.hpp
+    ServerGame.cpp
+    Server.cpp
+)

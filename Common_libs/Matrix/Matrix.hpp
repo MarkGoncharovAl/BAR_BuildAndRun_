@@ -84,7 +84,7 @@ double MF::Determ(const Matrix_t<T> &matrix)
     if (!matrix.IsSquare())
     {
         matrix.dump();
-        WARNING("Determinant can't be found on not square matrix! Upper is dump of this matrix:");
+        LOG_warning << ("Determinant can't be found on not square matrix! Upper is dump of this matrix:");
         return 0;
     }
 

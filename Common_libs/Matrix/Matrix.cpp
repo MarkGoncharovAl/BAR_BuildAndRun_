@@ -56,7 +56,7 @@ MF_help::TriangleMatrix(Matrix_t<double> &matrix, MF::Determ_sign *swappes /* = 
 {
     if (!matrix)
     {
-        WARNING("Can't find determinant of not initialized matrix!");
+        LOG_warning << ("Can't find determinant of not initialized matrix!");
         return VecRaw_t{};
     }
 
@@ -118,7 +118,7 @@ void MF_help::NormalizeMatrix(VecRaw_t &matrix)
     //!сюда следует подавать только ТРЕУГОЛЬНЫЕ матрицы
     if (matrix.empty())
     {
-        WARNING("Can't normalize empty matrix");
+        LOG_warning << ("Can't normalize empty matrix");
         return;
     }
 

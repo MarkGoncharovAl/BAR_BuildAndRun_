@@ -33,7 +33,7 @@ void sfC::ParamCar_t::CorrectProperties(int property, Do action /* = Do::Increas
             drift_speed_ += sfCON::controll_tank_rank;
             break;
         default:
-            WARNING("Can't find such property!");
+            LOG_warning << ("Can't find such property!");
             break;
         }
 
@@ -59,14 +59,14 @@ void sfC::ParamCar_t::CorrectProperties(int property, Do action /* = Do::Increas
             drift_speed_ -= sfCON::controll_tank_rank;
             break;
         default:
-            WARNING("Can't find such property!");
+            LOG_warning << ("Can't find such property!");
             break;
         }
 
         break;
 
     default:
-        WARNING("Can't change properties!");
+        LOG_warning <<("Can't change properties!");
         break;
     }
 }
