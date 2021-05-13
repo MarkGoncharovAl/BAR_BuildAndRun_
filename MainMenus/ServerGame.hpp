@@ -50,7 +50,6 @@ namespace sfDATA
         std::array<sfC::Text_t , 4> texts;
 
         sf::View full_view;
-
         sfC::Map map;
 
         sfC::Car_t tank1;
